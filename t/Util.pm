@@ -40,10 +40,8 @@ sub slurp {
 # initialize database
 use Tonkotsu;
 {
-    unlink 'db/test.db' if -f 'db/test.db';
-
     my $c = Tonkotsu->new();
-    $c->setup_schema();
+    $c->setup();
 }
 
 1;

@@ -8,14 +8,12 @@ use Plack::Builder;
 
 use Tonkotsu::Web;
 use Tonkotsu;
-use Plack::Session::Store::DBI;
 use DBI;
 
 {
     my $c = Tonkotsu->new();
-    $c->setup_schema();
+    $c->setup();
 }
-my $db_config = Tonkotsu->config->{DBI} || die "Missing configuration for DBI";
 builder {
     enable 'Plack::Middleware::Static',
         path => qr{^(?:/static/)},
@@ -24,12 +22,5 @@ builder {
         path => qr{^(?:/robots\.txt|/favicon\.ico)$},
         root => File::Spec->catdir(dirname(__FILE__), 'static');
     enable 'Plack::Middleware::ReverseProxy';
-    enable 'Plack::Middleware::Session',
-        store => Plack::Session::Store::DBI->new(
-            get_dbh => sub {
-                DBI->connect( @$db_config )
-                    or die $DBI::errstr;
-            }
-        );
     Tonkotsu::Web->to_app();
 };

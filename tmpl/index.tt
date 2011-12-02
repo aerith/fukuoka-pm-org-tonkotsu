@@ -1,82 +1,46 @@
-[% WRAPPER 'include/layout.tt' %]
-
-<div class="row">
-    <div class="span10">
-        <h1>Hello, Amon2 world!</h1>
-
-        <h2>For benchmarkers...</h2>
-        <p>If you want to benchmarking between Plack based web application frameworks, you should use <B>Amon2::Setup::Flavor::Minimum</B> instead.</p>
-        <p>You can use it as following one liner:</p>
-        <pre>% amon2-setup.pl --flavor Minimum Tonkotsu</pre>
-    </div>
-    <div class="span6">
-        <p>Amon2 is right for you if ...</p>
-        <ul>
-        <li>You need exceptional performance.</li>
-        <li>You want a framework with a small footprint.</li>
-        <li>You want a framework that requires nearly zero configuration.</li>
-        </ul>
-    </div>
-</div>
-
-<hr />
-
-<h1>Components?</h1>
-
-<section class="row">
-    <div class="span4">
-        <h2>CSS Library</h2>
-    </div>
-    <div class="span12">
-        Current version of Amon2 using twitter's bootstrap.css as a default CSS library.<br />
-        If you want to learn it, please access to <a href="http://twitter.github.com/bootstrap/">twitter.github.com/bootstrap/</a>
-    </div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>[% c().config().title %][% IF title %] - [% title %][% END %]</title>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script>
+if (navigator.userAgent.indexOf('Win') != -1) {
+    document.write('<link rel="stylesheet" type="text/css" href="/static/css/win.css" media="all">')
+}
+</script>
+<link rel="alternate" type="application/rss+xml" title="rss" href="http://blog.7kai.org/index.rdf">
+<link rel="stylesheet" type="text/css" href="/static/css/style.css" media="all">
+<link rel="stylesheet" type="text/css" href="/static/css/blog.css" media="all">
+<link href='http://fonts.googleapis.com/css?family=Raleway:100' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<header><h1><a href="/">[% c().config().title %]</a></h1></header>
+<div id="wrapper">
+<aside>
+<nav>
+[% c().cache().get('sidebar') | mark_raw %]
+</nav>
+</aside>
+<article>
+[%- FOREACH entry IN entries %]
+<section>
+[%- IF mode == 'entry' %]
+[% c().entry_as_html(entry) | mark_raw %]
+[% INCLUDE 'include/page_foot.tt' WITH entry = entry %]
+[%- ELSE %]
+<nav class="entry-list">
+<h1><a href="[% entry.url %]">[% entry.title %]</a></h1>
+<span class="date">[% entry.date %]</span>
+<span class="author"><a href="/author/[% entry.code %]/">by [% entry.code %]</a></span>
+</nav>
+[%- END %]
 </section>
-
-<hr />
-
-<section class="row">
-    <div class="span4">
-        <h2>JS Library</h2>
-    </div>
-    <div class="span12">
-        <a href="http://jquery.com/">jQuery</a> included.
-    </div>
-</section>
-
-<hr />
-
-<section class="row">
-    <div class="span4">
-        <h2>Template Engine</h2>
-    </div>
-    <div class="span12">
-        Amon2 uses Text::Xslate(TTerse) as a primary template engine.<br />
-        But you can use any template engine easily.
-    </div>
-</section>
-
-<hr />
-
-<section class="row">
-    <div class="span4">
-        <h2>O/R Mapper?</h2>
-    </div>
-    <div class="span12">
-        There is no O/R Mapper support. But I recommend to use Teng.<br />
-        You can integrate Teng very easily.<br />
-        See <a href="http://amon.64p.org/database.html#teng">This page</a> for more details.
-    </div>
-</section>
-
-<hr />
-
-<section class="row">
-    <div class="span16">
-        <h1>Documents?</h1>
-        <p>Complete docs are available on <a href="http://amon.64p.org/">amon.64p.org</a></p>
-        <p>And there is module specific docs on <a href="https://metacpan.org/release/Amon2">CPAN</a></p>
-    </div>
-</section>
-
 [% END %]
+</article>
+</div>
+<footer>[% c().config().footer %]</footer>
+</body>
+</html>

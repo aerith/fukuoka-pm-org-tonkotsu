@@ -1,19 +1,6 @@
-use File::Spec;
-use File::Basename qw(dirname);
-my $basedir = File::Spec->rel2abs(File::Spec->catdir(dirname(__FILE__), '..'));
-my $dbpath;
-if ( -d '/home/dotcloud/') {
-    $dbpath = "/home/dotcloud/development.db";
-} else {
-    $dbpath = File::Spec->catfile($basedir, 'db', 'development.db');
-}
+use utf8;
 +{
-    'DBI' => [
-        "dbi:SQLite:dbname=$dbpath",
-        '',
-        '',
-        +{
-            sqlite_unicode => 1,
-        }
-    ],
+    title => 'Fukuoka Perl Mongers',
+    footer => '',
+    max_recents => 10
 };
