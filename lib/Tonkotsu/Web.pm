@@ -13,7 +13,7 @@ sub dispatch {
 
 # load plugins
 __PACKAGE__->load_plugins(
-    'Web::FillInFormLite',
+    # 'Web::FillInFormLite',
     'Web::NoCache', # do not cache the dynamic content by default
     # 'Web::CSRFDefender',
 );
