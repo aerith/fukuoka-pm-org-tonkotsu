@@ -28,7 +28,8 @@ if (navigator.userAgent.indexOf('Win') != -1) {
 [%- FOREACH entry IN entries %]
 <section>
 [%- IF mode == 'entry' %]
-[% c().entry_as_html(entry) | mark_raw %]
+[% INCLUDE 'include/page_head.tt' WITH entry = entry %]
+[% c().getContentByEntry(entry) | mark_raw %]
 [% INCLUDE 'include/page_foot.tt' WITH entry = entry %]
 [%- ELSE %]
 <nav class="entry-list">

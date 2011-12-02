@@ -8,6 +8,15 @@
 </section>
 
 <section>
+<h1>Author</h1>
+<ul>
+[% FOREACH author IN authors %]
+<li><a href="/author/[% author.code %]/" title="[% author.name %]">[% author.name %]</a></li>
+[% END %]
+</ul>
+</section>
+
+<section>
 <h1>Category</h1>
 <ul>
 [% FOREACH category IN categories %]

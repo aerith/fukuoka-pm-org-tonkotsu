@@ -29,6 +29,7 @@ sub setup_data {
                 my ($code, $format) = ($1, $2);
                 warn "[DEBUG] ${code}'s profile format is $format";
                 my $author = decode_json($file->slurp);
+                $author->{code} = $code;
                 $author_map->{ $code } = $author;
             } elsif ($rel_path=~m{^([^/]+)/blog/(.*)?/?(\d{4})(\d{2})(\d{2})(\d{2})\.(.*)\.(md|html)$}) {
                 my ($code, $category, $year, $month, $mday, $hour, $page, $format)
@@ -85,6 +86,7 @@ sub setup_sidebar {
     @recents = splice(@recents, 0, ($c->config->{max_recents} - 1))
         if scalar(@recents) > $c->config->{max_recents};
     
+    my @authors = sort { $a->{code} cmp $b->{code} } values %{ $author_map };
     
     my $month_hash = {};
     my $day_hash = {};
@@ -135,6 +137,7 @@ sub setup_sidebar {
     }
     my $sidebar = $c->create_view->render('include/sidebar.tt', {
         recents       => \@recents,
+        authors       => \@authors,
         categories    => \@categories,
         months        => \@months,
         this_calendar => \@this_calender,

@@ -1,0 +1,5 @@
+[% SET author = c().getAuthorByEntry(entry) %]
+<header>
+  <span class="date">[% entry.date %]</span>
+  <a href="/author/[% author.code %]/">by [% author.name %]</a>
+</header>

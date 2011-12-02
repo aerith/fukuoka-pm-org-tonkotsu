@@ -27,7 +27,7 @@ sub setup {
     Tonkotsu::Setup->setup($c);
 }
 
-sub entry_as_html {
+sub getContentByEntry {
     my ($c, $entry) = @_;
     my $html = file($entry->{file})->slurp;
     if ($entry->{format} eq 'md') {
@@ -38,6 +38,13 @@ sub entry_as_html {
         return "[ERROR] unknown format " . $entry->{format};
     }
     return $html;
+}
+
+sub getAuthorByEntry {
+    my ($c, $entry) = @_;
+    my $data = $c->cache->get('data');
+    my $author_map = $data->{author_map};
+    $author_map->{ $entry->{code} };
 }
 
 # setup view class
