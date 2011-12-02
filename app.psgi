@@ -8,7 +8,6 @@ use Plack::Builder;
 
 use Tonkotsu::Web;
 use Tonkotsu;
-use DBI;
 
 {
     my $c = Tonkotsu->new();
